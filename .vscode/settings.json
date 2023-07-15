@@ -1,5 +1,4 @@
 {
-    "python.pythonPath": "C:/Users/coole/.virtualenvs/storeplace-bw1FvV1B/Scripts/python.exe",
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8"
     },
