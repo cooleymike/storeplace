@@ -2,12 +2,16 @@ from django.db import models
 
 
 class Promotion(models.Model):
+    # TODO: Are you sure that the max length is 255, or it would be less?
+    #   For me description is a long text, in that case, it looks like the name of the promotion?
     description = models.CharField(max_length=255)
     discount = models.FloatField()
 
 
 class Collection(models.Model):
+    # TODO: Are you sure that the max length is 255, or it would be less?
     title = models.CharField(max_length=255)
+    # TODO: Can you explain what is a featured product in that case?
     featured_product = models.ForeignKey(
         'Product', on_delete=models.SET_NULL, null=True, related_name='+')  # the + tells django not to create a reverse relationship
 
@@ -47,6 +51,8 @@ class Customer (models.Model):  # parent
 
 
 class Order(models.Model):
+    # TODO: You can use the full string instead of just the first letter
+    #   To be more clear (This could help if you need debug data) optional
     PAYMENT_STATUS_PENDING = 'P'
     PAYMENT_STATUS_COMPLETE = 'C'
     PAYMENT_STATUS_FAILED = 'F'
@@ -64,12 +70,18 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    # TODO: Why do we want to keep orderitem if an order is deleted?
+    #   Does not make to me
     # won't delete order items if you accidentally delete orders
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
+
+    # TODO: This would make sense, because you would want to keep the historic of orders even if one product is deleted
+    #   In that case, I would simply archive the product, so it would never be deleted
     # won't delete associated items if you accidentally delete product
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     # prevent negative values in this field
     quantity = models.PositiveSmallIntegerField()
+
     # always store price of product at order time
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
 
