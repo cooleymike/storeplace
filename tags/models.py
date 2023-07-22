@@ -6,6 +6,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class Tag(models.Model):
+
+    # TODO: Is max_length=255 necessary?
     label = models.CharField(max_length=255)
 
 
